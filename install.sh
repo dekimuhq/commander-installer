@@ -11,8 +11,8 @@
 #   1. Checks Ubuntu 24.04 + root.
 #   2. Installs Node.js 22 from NodeSource (if missing).
 #   3. Creates a dedicated `commander` system user (no shell login).
-#   4. Fetches a pinned commander-worker tarball from GitHub Releases,
-#      verifies its sha256, extracts to /home/commander/worker.
+#   4. Fetches a pinned commander-worker tarball from the public Vercel
+#      Blob mirror, verifies its sha256, extracts to /home/commander/worker.
 #   5. Drops a /etc/commander-worker/env skeleton (placeholders only).
 #   6. Installs a systemd unit `commander-worker.service`. Does NOT start it.
 #   7. Prints a "next steps" block: fill envs, then `systemctl start`.
@@ -109,12 +109,13 @@ install -d -m 0750 -o root            -g "${WORKER_USER}" "${ENV_DIR}"
 
 VERSION_NUM="${WORKER_VERSION#v}"
 TARBALL="commander-worker-${VERSION_NUM}.tar.gz"
-TARBALL_URL="https://github.com/${WORKER_REPO}/releases/download/${WORKER_VERSION}/${TARBALL}"
+BLOB_HOST="https://c9myjual9hsi50ix.public.blob.vercel-storage.com"
+TARBALL_URL="${BLOB_HOST}/commander-worker/${WORKER_VERSION}/${TARBALL}"
 SHA_URL="${TARBALL_URL}.sha256"
 
 TMPDIR="$(mktemp -d)"
 trap 'rm -rf "${TMPDIR}"' EXIT
-say "fetching ${WORKER_VERSION} from ${WORKER_REPO}"
+say "fetching ${WORKER_VERSION} from public Blob mirror"
 curl -fsSL --retry 3 --retry-delay 2 -o "${TMPDIR}/${TARBALL}" "${TARBALL_URL}" \
   || die "could not download ${TARBALL_URL}"
 curl -fsSL --retry 3 --retry-delay 2 -o "${TMPDIR}/${TARBALL}.sha256" "${SHA_URL}" \

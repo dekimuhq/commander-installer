@@ -17,7 +17,7 @@ The script:
 1. Verifies the host is Ubuntu 24.04.
 2. Installs Node.js 22 (NodeSource).
 3. Creates a dedicated `commander` system user (`/usr/sbin/nologin`).
-4. Fetches a pinned `commander-worker` tarball from GitHub Releases and verifies its sha256.
+4. Fetches a pinned `commander-worker` tarball from a public [Vercel Blob](https://vercel.com/docs/storage/vercel-blob) mirror and verifies its sha256.
 5. Extracts it to `/home/commander/worker`.
 6. Drops a `/etc/commander-worker/env` skeleton with placeholder values (no secrets are baked in).
 7. Installs a systemd unit `commander-worker.service`. **Does not start it.**
