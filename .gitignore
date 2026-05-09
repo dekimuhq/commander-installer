@@ -1,0 +1,8 @@
+# tooling artifacts
+*.swp
+.DS_Store
+node_modules/
+
+# local test scratch
+.test-output/
+*.tmp
