@@ -1,5 +1,7 @@
 # commander-installer
 
+> **Archived — Commander was discontinued on 2026-10-19.** This installer is no longer maintained and the release artifacts it fetches are no longer published, so it will not produce a working install. Do not run it. The repository is kept read-only for reference only.
+
 Single-shot installer for [`commander-worker`](https://github.com/dekimuhq/commander-worker) on Ubuntu 24.04 LTS.
 
 > **Audit before piping to sh.** This is a public shell script that runs as root on your box. Read every line at [`install.sh`](./install.sh) before running it.
